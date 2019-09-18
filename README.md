@@ -6,17 +6,17 @@
 
 | Name | Description | Installation Guide |
 | :-- | :-- | :-- |
-| JDK 8(Oracle) | Java Development Kit, used in both Hadoop and Spark. | [install for linux](https://docs.oracle.com/javase/8/docs/technotes/guides/install/linux_jdk.html) |
-| JDK 8(Open) | Java Development Kit, used in both Hadoop and Spark. | [install for linux](https://openjdk.java.net/install/index.html) |
-
+| JDK 8(Oracle) | Java Development Kit, used in both Hadoop and Spark. | [install Oracle JDK 8 for linux](https://docs.oracle.com/javase/8/docs/technotes/guides/install/linux_jdk.html) |
+| JDK 8(Open) | Java Development Kit, used in both Hadoop and Spark. | [install Open JDK 8 for linux](https://openjdk.java.net/install/index.html) |
+| Scala(2.11.12) | its JVM and JavaScript runtimes let you build high-performance systems with easy access to huge ecosystems of libraries. | [install Scala for linux](https://github.com/scala/scala/releases/tag/v2.11.12) |
 
 ## Setup
 
 ## 1.1. Installing Spark+Hadoop on Linux with no prior installation
 
-1\. Go to [Apache Spark Download page](http://spark.apache.org/downloads.html). Choose the Spark release (2.4.3), and the package type "Pre-built for Hadoop 2.7 and later". Click on the link "Download Spark" to get the `tgz` package of the latest Spark release. On July 2017 this file was `spark-2.4.3-bin-hadoop2.7.tgz` so we will be using that in the rest of these guidelines but feel free to adapt to your version.
+1\. Go to [Apache Spark Download page](http://spark.apache.org/downloads.html). Choose the Spark release (2.4.3), and the package type "Pre-built for Hadoop 2.7 and later". Click on the link "Download Spark" to get the `tgz` package of the latest Spark release. On Aug 2019 this file was `spark-2.4.3-bin-hadoop2.7.tgz` so we will be using that in the rest of these guidelines but feel free to adapt to your version.
 
-> ![spark installation website](images/spark-install-22.png)
+> ![spark installation website](img/spark-install-243.png)
 
 2\. Uncompress that file into `/usr/local` by typing:
 
@@ -30,7 +30,7 @@ sudo tar xvzf spark-2.4.3-bin-hadoop2.7.tgz -C /usr/local/
 sudo ln -s /usr/local/spark-2.4.3-bin-hadoop2.7 /usr/local/spark
 ```
 
-4\. Go to [Apache Hadoop Download page](http://hadoop.apache.org/releases.html#Download). On the table above, click on the latest version below 3 (2.8.1 as of July 2017). Click as to download the *binary* version `tar.gz` archive, choose a mirror and download the file unto your computer.
+4\. Go to [Apache Hadoop Download page](http://hadoop.apache.org/releases.html#Download). On the table above, click on the latest version below 3 (3.1.2 as of Aug 2019). Click as to download the *binary* version `tar.gz` archive, choose a mirror and download the file unto your computer.
 
 5\. Uncompress that file into `/usr/local` by typing:
 
@@ -79,85 +79,7 @@ export LD_LIBRARY_PATH=$HADOOP_HOME/lib/native/:$LD_LIBRARY_PATH
 
 # 3. How to run Spark python scripts
 
-## 3.1. How to run Spark/Python from a Jupyter Notebook
-
-Running Spark from a jupyter notebook can require you to launch jupyter with a specific setup so that it connects seamlessly with the Spark Driver. We recommend you create a shell script `jupyspark.sh` designed specifically for doing that.
-
-1\. Create a file called `jupyspark.sh` somewhere under your `$PATH`, or in a directory of your liking (I usually use a `scripts/` directory under my home directory). In this file, you'll copy/paste the following lines:
-
-```bash
-#!/bin/bash
-export PYSPARK_DRIVER_PYTHON=jupyter
-export PYSPARK_DRIVER_PYTHON_OPTS="notebook --NotebookApp.open_browser=True --NotebookApp.ip='localhost' --NotebookApp.port=8888"
-
-${SPARK_HOME}/bin/pyspark \
---master local[4] \
---executor-memory 1G \
---driver-memory 1G \
---conf spark.sql.warehouse.dir="file:///tmp/spark-warehouse" \
---packages com.databricks:spark-csv_2.11:1.5.0 \
---packages com.amazonaws:aws-java-sdk-pom:1.10.34 \
---packages org.apache.hadoop:hadoop-aws:2.8.0
-```
-
-
-Save the file. Make it executable by doing `chmod 711 jupyspark.sh`. Now, whenever you want to launch a spark jupyter notebook run this script by typing `jupyspark.sh` in your terminal.
-
-Here's how to read that script... Basically, we are going to use `pyspark` (an executable from your Spark installation) to run `jupyter` with a proper Spark context.
-
-The first two lines :
-```bash
-export PYSPARK_DRIVER_PYTHON=jupyter
-export PYSPARK_DRIVER_PYTHON_OPTS="notebook --NotebookApp.open_browser=True --NotebookApp.ip='localhost' --NotebookApp.port=8888"
-```
-will set up two environment variables for `pyspark` to execute `jupyter`.
-
-Note: If you are installing Spark on a Virtual Machine and would like to access jupyter from your host browser, you should set the NotebookApp.ip flag to `--NotebookApp.ip='0.0.0.0'` so that your VM's jupyter server will accept external connections. You can then access jupyter notebook from the host machine on port 8888.
-
-The next line:
-```bash
-${SPARK_HOME}/bin/pyspark \
-```
-is part of a multiline long command to run `pyspark` with all necessary packages and options.
-
-The next 3 lines:
-```bash
---master local[4] \
---executor-memory 1G \
---driver-memory 1G \
-```
-Set up the options for `pyspark` to execute locally, using all 4 cores of your computer and setting up the memory usage for Spark Driver and Executor.
-
-The next line:
-```bash
---conf spark.sql.warehouse.dir="file:///tmp/spark-warehouse" \
-```
-Is creating a directory to store Sparl SQL dataframes. This is non-necessary but has been solving a common error for loading and processing S3 data into Spark Dataframes.
-
-The final 3 lines:
-```bash
---packages com.databricks:spark-csv_2.11:1.5.0 \
---packages com.amazonaws:aws-java-sdk-pom:1.10.34 \
---packages org.apache.hadoop:hadoop-aws:2.8.0
-```
-add specific packages to `pyspark` to load. These packages are necessary to access AWS S3 repositories from Spark/Python and to read csv files.
-
-**Note**: You can adapt these parameters to your own liking. See Spark page on [Submitting applications](http://spark.apache.org/docs/latest/submitting-applications.html) to tune these parameters.
-
-2\. Now run this script. It will open a notebook home page in your browser. From there, create a new notebook and copy/pate the following commands in your notebook:
-
-```python
-import pyspark as ps
-
-spark = ps.sql.SparkSession.builder.getOrCreate()
-```
-
-What these lines do is to try to connect to the Spark Driver by creating a new [`SparkSession` instance](http://spark.apache.org/docs/latest/api/java/index.html?org/apache/spark/sql/SparkSession.html).
-
-After this point, you can use `spark` as a unique entry point for [reading files and doing spark things](https://databricks.com/blog/2016/08/15/how-to-use-sparksession-in-apache-spark-2-0.html).
-
-
-## 3.2. How to run Spark/Python from command line with via `spark-submit`
+## 3.1. How to run Spark/Python from command line with via `spark-submit`
 
 Instead of using jupyter notebook, if you want to run your python script (using Spark) from the command line, you will need to use an executable from the Spark suite called `spark-submit`. Again, this executable requires some options that we propose to put into a script to use whenever you need to launch a Spark-based python script.
 
@@ -182,7 +104,6 @@ See the previous section 2.1 for an explanation of these values. The final line 
 2\. Whenever you want to run your script (called for instance `script.py`), you would do it by typing `localsparksubmit.sh script.py` from the command line. Make sure you put `localsparksubmit.sh` somewhere under your `$PATH`, or in a directory of your linking.
 
 **Note**: You can adapt these parameters to your own setup. See Spark page on [Submitting applications](http://spark.apache.org/docs/latest/submitting-applications.html) to tune these parameters.
-
 
 # 4. Testing your installation
 
@@ -216,5 +137,68 @@ Pi is (very) roughly 3.141317
 
 2\. Create a python script called `testspark.py` and paste the same lines above in it. Run this script from the command line using `localsparksubmit.sh testspark.py`. It should output the same result as above.
 
+# 5. Scala IDE
+The aim of Scala IDE is to provide a support for Scala development equivalent to the support provided by Eclipse for Java development.
+
+> ![scala ide installation website](img/scala-ide.png)
+
+# 6. Zookeeper
+Apache ZooKeeper is an effort to develop and maintain an open-source server which enables highly reliable distributed coordination.
+
+```
+sudo apt-get install zookeeperd
+```
+
+# 7. Kafka
+Apache Kafka is a community distributed streaming platform capable of handling trillions of events a day.
+
+```
+cd /usr/local/
+wget http://www-eu.apache.org/dist/kafka/2.3.0/kafka_2.11-2.3.0.tgz
+tar zxf .tgz
+
+```
+
+Edit Zookeeper properties into `/usr/local/kafka_2.11-2.3.0/config/` by typing:
+
+```bash
+# /usr/local/kafka_2.11-2.3.0/config/zookeeper.properties
+
+dataDir=/tmp/zookeeper
+clientPort=2181
+maxClientCnxns=0
+initLimit=10
+syncLimit=5
+
+1=192.168.0.37:2888:3888
+2=192.168.0.38:2888:3888
+3=192.168.0.39:2888:3888
+```
+Edit Kafka properties into `/usr/local/kafka_2.11-2.3.0/config/` by typing:
+
+```bash
+# /usr/local/kafka_2.11-2.3.0/config/server.properties
+
+listeners=PLAINTEXT://:9092
+advertised.listeners=PLAINTEXT://192.168.0.37:9092
+advertised.host.name=192.168.0.37
+advertised.host.name=9092
+
+zookeeper.connect=192.168.0.37:2181, 192.168.0.38:2181, 192.168.0.39:2181
+
+zookeeper.connection.timeout.ms=6000
+```
+
+To run Zookeeper
+```bash
+# /usr/local/kafka_2.11-2.3.0/
+$ bin/zookeeper-server-start.sh config/zookeeper.properties
+```
+
+To run Kafka
+```bash
+# /usr/local/kafka_2.11-2.3.0/
+$ bin/kafka-server-start.sh config/server.properties
+```
 
 ## LICENSE [MIT](LICENSE)
