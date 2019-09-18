@@ -8,6 +8,8 @@ sudo apt-get install zookeeperd
 # 2. Kafka
 Apache Kafka is a community distributed streaming platform capable of handling trillions of events a day.
 
+## 2.1 Settings
+
 ```
 cd /usr/local/
 wget http://www-eu.apache.org/dist/kafka/2.3.0/kafka_2.11-2.3.0.tgz
@@ -46,15 +48,45 @@ zookeeper.connect=192.168.0.37:2181, 192.168.0.38:2181, 192.168.0.39:2181
 
 zookeeper.connection.timeout.ms=6000
 ```
+## 2.2 Run
 
 To run Zookeeper
+
 ```bash
 # /usr/local/kafka_2.11-2.3.0/
 $ bin/zookeeper-server-start.sh config/zookeeper.properties
 ```
 
 To run Kafka
+
 ```bash
 # /usr/local/kafka_2.11-2.3.0/
 $ bin/kafka-server-start.sh config/server.properties
+```
+
+To generate topic
+
+```bash
+# /usr/local/kafka_2.11-2.3.0/
+/bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic hd-bsnc
+```
+
+To check generated topic
+```bash
+# /usr/local/kafka_2.11-2.3.0/
+bin/kafka-topics.sh --list --zookeeper localhost:2181
+```
+
+## 2.3 Test
+
+Run Producer
+```bash
+# /usr/local/kafka_2.11-2.3.0/
+bin/kafka-console-producer.sh --broker-list localhost:9092 --topic test
+```
+
+Run Consumer
+```bash
+# /usr/local/kafka_2.11-2.3.0/
+bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic test --from-beginning
 ```

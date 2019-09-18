@@ -2,8 +2,6 @@
 
 ## Requirements
 
-### Requirements for Linux
-
 | Name | Description | Installation Guide |
 | :-- | :-- | :-- |
 | JDK 8(Oracle) | Java Development Kit, used in both Hadoop and Spark. | [install Oracle JDK 8 for linux](https://docs.oracle.com/javase/8/docs/technotes/guides/install/linux_jdk.html) |
@@ -12,13 +10,14 @@
 
 
 # Install Apache Spark
-[Apache Spark](https://github.com/bsnc-conlab/bigdata/blob/master/README_Spark.md)
+
+## [Apache Spark](https://github.com/bsnc-conlab/bigdata/blob/master/README_Spark.md)
 
 
 # Install Apache Kafka
-[Apache Kafka](https://github.com/bsnc-conlab/bigdata/blob/master/README_Kafka.md)
+## [Apache Kafka](https://github.com/bsnc-conlab/bigdata/blob/master/README_Kafka.md)
 
 # Set WAS Server
-[Was Server](https://github.com/bsnc-conlab/bigdata/blob/master/README_Was.md)
+## [Was Server](https://github.com/bsnc-conlab/bigdata/blob/master/README_Was.md)
 
 ## LICENSE [MIT](LICENSE)
