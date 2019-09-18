@@ -1,16 +1,4 @@
-# HD-BSNC_BigData
-
-## Requirements
-
-### Requirements for Linux
-
-| Name | Description | Installation Guide |
-| :-- | :-- | :-- |
-| JDK 8(Oracle) | Java Development Kit, used in both Hadoop and Spark. | [install Oracle JDK 8 for linux](https://docs.oracle.com/javase/8/docs/technotes/guides/install/linux_jdk.html) |
-| JDK 8(Open) | Java Development Kit, used in both Hadoop and Spark. | [install Open JDK 8 for linux](https://openjdk.java.net/install/index.html) |
-| Scala(2.11.12) | its JVM and JavaScript runtimes let you build high-performance systems with easy access to huge ecosystems of libraries. | [install Scala for linux](https://github.com/scala/scala/releases/tag/v2.11.12) |
-
-## Setup
+# Setup
 
 ## 1.1. Installing Spark+Hadoop on Linux
 
@@ -141,66 +129,3 @@ Pi is (very) roughly 3.141317
 The aim of Scala IDE is to provide a support for Scala development equivalent to the support provided by Eclipse for Java development.
 
 > ![scala ide installation website](img/scala-ide.png)
-
-# 6. Zookeeper
-Apache ZooKeeper is an effort to develop and maintain an open-source server which enables highly reliable distributed coordination.
-
-```
-sudo apt-get install zookeeperd
-```
-
-# 7. Kafka
-Apache Kafka is a community distributed streaming platform capable of handling trillions of events a day.
-
-```
-cd /usr/local/
-wget http://www-eu.apache.org/dist/kafka/2.3.0/kafka_2.11-2.3.0.tgz
-tar zxf .tgz
-
-```
-
-Edit Zookeeper properties into `/usr/local/kafka_2.11-2.3.0/config/` by typing:
-
-```bash
-# /usr/local/kafka_2.11-2.3.0/config/zookeeper.properties
-
-dataDir=/tmp/zookeeper
-clientPort=2181
-maxClientCnxns=0
-initLimit=10
-syncLimit=5
-
-broker1=192.168.0.37:2888:3888
-broker2=192.168.0.38:2888:3888
-broker3=192.168.0.39:2888:3888
-```
-Edit Kafka properties into `/usr/local/kafka_2.11-2.3.0/config/` by typing:
-
-```bash
-# /usr/local/kafka_2.11-2.3.0/config/server.properties
-
-broker.id=broker1
-
-listeners=PLAINTEXT://:9092
-advertised.listeners=PLAINTEXT://192.168.0.37:9092
-advertised.host.name=192.168.0.37
-advertised.host.name=9092
-
-zookeeper.connect=192.168.0.37:2181, 192.168.0.38:2181, 192.168.0.39:2181
-
-zookeeper.connection.timeout.ms=6000
-```
-
-To run Zookeeper
-```bash
-# /usr/local/kafka_2.11-2.3.0/
-$ bin/zookeeper-server-start.sh config/zookeeper.properties
-```
-
-To run Kafka
-```bash
-# /usr/local/kafka_2.11-2.3.0/
-$ bin/kafka-server-start.sh config/server.properties
-```
-
-## LICENSE [MIT](LICENSE)
