@@ -11,11 +11,14 @@
 | Scala(2.11.12) | its JVM and JavaScript runtimes let you build high-performance systems with easy access to huge ecosystems of libraries. | [install Scala for linux](https://github.com/scala/scala/releases/tag/v2.11.12) |
 
 
+# Install Apache Spark
+[Apache Spark](https://github.com/bsnc-conlab/bigdata/blob/master/README_Spark.md)
 
 
+# Install Apache Kafka
+[Apache Kafka](https://github.com/bsnc-conlab/bigdata/blob/master/README_Kafka.md)
 
-
-
-
+# Set WAS Server
+[Was Server](https://github.com/bsnc-conlab/bigdata/blob/master/README_Was.md)
 
 ## LICENSE [MIT](LICENSE)
