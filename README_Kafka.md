@@ -68,7 +68,7 @@ To generate topic
 
 ```bash
 # /usr/local/kafka_2.11-2.3.0/
-/bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic hd-bsnc
+/bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic bsnc
 ```
 
 To check generated topic
@@ -82,11 +82,11 @@ bin/kafka-topics.sh --list --zookeeper localhost:2181
 Run Producer
 ```bash
 # /usr/local/kafka_2.11-2.3.0/
-bin/kafka-console-producer.sh --broker-list localhost:9092 --topic hd-bsnc
+bin/kafka-console-producer.sh --broker-list localhost:9092 --topic bsnc
 ```
 
 Run Consumer
 ```bash
 # /usr/local/kafka_2.11-2.3.0/
-bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic hd-bsnc --from-beginning
+bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic bsnc --from-beginning
 ```
