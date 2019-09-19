@@ -8,8 +8,8 @@
 | JDK 8(Open) | Java Development Kit, used in both Hadoop and Spark. | [install Open JDK 8 for linux](https://openjdk.java.net/install/index.html) |
 | Scala(2.11.12) | its JVM and JavaScript runtimes let you build high-performance systems with easy access to huge ecosystems of libraries. | [install Scala for linux](https://github.com/scala/scala/releases/tag/v2.11.12) |
 
-# Structure
-> ![Structure](img/Structure.png)
+# Architecture
+> ![Architecture](img/Architecture.png)
 
 
 # Install Apache Spark
@@ -21,6 +21,6 @@
 ## [Apache Kafka](https://github.com/bsnc-conlab/bigdata/blob/master/README_Kafka.md)
 
 # Set WAS Server
-## [Was Server](https://github.com/bsnc-conlab/simple-was)
+## [Was Server](https://github.com/bsnc-conlab/bigdata/blob/master/README_Was.md)
 
 ## LICENSE [MIT](LICENSE)
