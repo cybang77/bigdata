@@ -82,11 +82,11 @@ bin/kafka-topics.sh --list --zookeeper localhost:2181
 Run Producer
 ```bash
 # /usr/local/kafka_2.11-2.3.0/
-bin/kafka-console-producer.sh --broker-list localhost:9092 --topic test
+bin/kafka-console-producer.sh --broker-list localhost:9092 --topic hd-bsnc
 ```
 
 Run Consumer
 ```bash
 # /usr/local/kafka_2.11-2.3.0/
-bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic test --from-beginning
+bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic hd-bsnc --from-beginning
 ```
