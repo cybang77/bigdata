@@ -99,32 +99,59 @@ See the previous section 2.1 for an explanation of these values. The final line 
 
 # 4. Testing your installation
 
-1\. Open a new jupyter notebook (from the `jupyspark.sh` script provided above) and paste the following code:
+1\. Open `${SPARK_HOME}/bin/examples/src/main/python` wordcount.py :
 
 ```python
-import pyspark as ps
-import random
+from __future__ import print_function
 
-spark = ps.sql.SparkSession.builder \
-        .appName("rdd test") \
+import sys
+from operator import add
+
+from pyspark.sql import SparkSession
+
+
+if __name__ == "__main__":
+    if len(sys.argv) != 2:
+        print("Usage: wordcount <file>", file=sys.stderr)
+        sys.exit(-1)
+
+    spark = SparkSession\
+        .builder\
+        .appName("PythonWordCount")\
         .getOrCreate()
 
-random.seed(1)
+    lines = spark.read.text(sys.argv[1]).rdd.map(lambda r: r[0])
+    counts = lines.flatMap(lambda x: x.split(' ')) \
+                  .map(lambda x: (x, 1)) \
+                  .reduceByKey(add)
+    output = counts.collect()
+    for (word, count) in output:
+        print("%s: %i" % (word, count))
 
-def sample(p):
-    x, y = random.random(), random.random()
-    return 1 if x*x + y*y < 1 else 0
+    spark.stop()
+```
 
-count = spark.sparkContext.parallelize(range(0, 10000000)).map(sample) \
-             .reduce(lambda a, b: a + b)
-
-print("Pi is (very) roughly {}".format(4.0 * count / 10000000))
+Run example
+```bash
+# /usr/local/kafka/bin/
+./spark-submit ../examples/src/main/python/wordcount.py ./../README.md
 ```
 
 It should output the following result :
 
 ```
-Pi is (very) roughly 3.141317
+project.: 1
+help: 1
+when: 1
+Hadoop: 3
+MLlib: 1
+"local": 1
+./dev/run-tests: 1
+including: 4
+graph: 1
+.
+.
+...
 ```
 
 2\. Create a python script called `testspark.py` and paste the same lines above in it. Run this script from the command line using `localsparksubmit.sh testspark.py`. It should output the same result as above.

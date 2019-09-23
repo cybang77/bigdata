@@ -29,6 +29,8 @@ sudo tar xvzf kafka_2.11-2.3.0.tgz -C /usr/local/
 sudo ln -s /usr/local/kafka_2.11-2.3.0 /usr/local/kafka
 ```
 
+### 2.1.1 kafka with Zookeeper
+
 Edit Zookeeper properties into `/usr/local/kafka_2.11-2.3.0/config/` by typing:
 
 ```bash
@@ -60,6 +62,27 @@ zookeeper.connect=broker1_IP:2181
 
 zookeeper.connection.timeout.ms=6000
 ```
+
+### 2.1.2 kafka for broker
+
+Edit Kafka properties into `/usr/local/kafka_2.11-2.3.0/config/` by typing:
+
+```bash
+# /usr/local/kafka_2.11-2.3.0/config/server.properties
+
+broker.id=broker2
+
+listeners=PLAINTEXT://:9092
+advertised.listeners=PLAINTEXT://broker2_IP:9092
+advertised.host.name=broker2_IP
+advertised.host.name=9092
+
+zookeeper.connect=broker1_IP:2181
+
+zookeeper.connection.timeout.ms=6000
+```
+
+
 ## 2.2 Run
 
 To run Zookeeper
