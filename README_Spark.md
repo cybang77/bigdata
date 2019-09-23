@@ -144,7 +144,7 @@ wget downloads.typesafe.com/scalaide-pack/4.7.0-vfinal-oxygen-212-20170929/scala
 sudo tar xvzf scala-SDK-4.7.0-vfinal-2.12-linux.gtk.x86_64.tar.gz -C /usr/local/
 ```
 
-2\. To run Scala IDE
+3\. To run Scala IDE
 
 ```
 /usr/local/eclipse/eclipse
