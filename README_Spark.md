@@ -2,7 +2,11 @@
 
 ## 1.1. Installing Spark+Hadoop on Linux
 
-1\. Go to [Apache Spark Download page](http://spark.apache.org/downloads.html). Choose the Spark release (2.4.3), and the package type "Pre-built for Hadoop 2.7 and later". Click on the link "Download Spark" to get the `tgz` package of the latest Spark release. On Aug 2019 this file was `spark-2.4.3-bin-hadoop2.7.tgz` so we will be using that in the rest of these guidelines but feel free to adapt to your version.
+1\. Go to [Apache Spark Download page](http://spark.apache.org/downloads.html). Choose the Spark release (2.4.3), and the package type "Pre-built for Hadoop 2.7 and later". Click on the link "Download Spark" to get the `tgz` package of the 2.4.3 Spark release. On Aug 2019 this file was `spark-2.4.3-bin-hadoop2.7.tgz` so we will be using that in the rest of these guidelines but feel free to adapt to your version.
+
+```
+wget https://archive.apache.org/dist/spark/spark-2.4.3/spark-2.4.3-bin-hadoop2.7.tgz
+```
 
 > ![spark installation website](img/spark-install-243.png)
 
@@ -18,23 +22,23 @@ sudo tar xvzf spark-2.4.3-bin-hadoop2.7.tgz -C /usr/local/
 sudo ln -s /usr/local/spark-2.4.3-bin-hadoop2.7 /usr/local/spark
 ```
 
-4\. Go to [Apache Hadoop Download page](http://hadoop.apache.org/releases.html#Download). On the table above, click on the latest version below 3 (3.1.2 as of Aug 2019). Click as to download the *binary* version `tar.gz` archive, choose a mirror and download the file unto your computer.
+4\. Go to [Apache Hadoop Download page](http://hadoop.apache.org/releases.html#Download). On the table above, click on the 2.7.3 version (3.1.2 as of Aug 2019). Click as to download the *binary* version `tar.gz` archive, choose a mirror and download the file unto your computer.
 
 5\. Uncompress that file into `/usr/local` by typing:
 
 ```
-sudo tar xvzf /path_to_file/hadoop-3.1.2.tar.gz -C /usr/local/
+sudo tar xvzf /path_to_file/hadoop-2.7.3.tar.gz -C /usr/local/
 ```
 
 6\. Create a shorter symlink of this directory using:
 
 ```
-sudo ln -s /usr/local/hadoop-3.1.2 /usr/local/hadoop
+sudo ln -s /usr/local/hadoop-2.7.3 /usr/local/hadoop
 ```
 
 ## 1.2. Installation of Spark+Hadoop
 
-We strongly recommend you update your installation to the must recent version of Spark. As of Aug 2019 we used Spark 2.4.3 and Hadoop 3.1.2.
+We strongly recommend you update your installation to the must recent version of Spark. As of Aug 2019 we used Spark 2.4.3 and Hadoop 2.7.3.
 
 If you want to use another version there, all you have to do is to locate your installation directories for Spark and Hadoop, and use that in the next section 2.1 for setting up your environment.
 
@@ -128,4 +132,23 @@ Pi is (very) roughly 3.141317
 # 5. Scala IDE
 The aim of Scala IDE is to provide a support for Scala development equivalent to the support provided by Eclipse for Java development.
 
+1\. Go to [Scala IDE Download page](http://http://scala-ide.org/download/sdk.html). Choose the release (4.7.0). Click on the link "Download IDE" to get the `tgz.gz` package of the latest IDE release. On Aug 2019 this file was `scala-SDK-4.7.0-vfinal-2.12-linux.gtk.x86_64.tar.gz` so we will be using that in the rest of these guidelines but feel free to adapt to your version.
+
+```
+wget downloads.typesafe.com/scalaide-pack/4.7.0-vfinal-oxygen-212-20170929/scala-SDK-4.7.0-vfinal-2.12-linux.gtk.x86_64.tar.gz
+```
+
+2\. Uncompress that file into `/usr/local` by typing:
+
+```
+sudo tar xvzf scala-SDK-4.7.0-vfinal-2.12-linux.gtk.x86_64.tar.gz -C /usr/local/
+```
+
+2\. To run Scala IDE
+
+```
+/usr/local/eclipse/eclipse
+```
+
 > ![scala ide installation website](img/scala-ide.png)
+
